@@ -79,6 +79,45 @@ class User extends Authenticatable
         return Micropost::whereIn('user_id', $follow_user_ids);
     }
     
+    public function favorites()
+    {
+        return $this->belongsToMany(Micropost::class, 'favorites', 'user_id', 'micropost_id')->withTimestamps();
+    }
+    
+    public function favorit($micropostId)
+    {
+        // 既にお気に入りしているかの確認
+        $exist = $this->is_favoriting($micropostId);
+    
+        if ($exist) {
+            // 既にお気に入りしていれば何もしない
+            return false;
+        } else {
+            // 無い場合はお気に入りする
+            $this->favorites()->attach($micropostId);
+            return true;
+        }
+    }
+    
+    public function unfavorit($micropostId)
+    {
+        // 既にお気に入りしているかの確認
+        $exist = $this->is_favoriting($micropostId);
+    
+        if ($exist) {
+            // 既にお気に入りしていればお気に入りを外す
+            $this->favorites()->detach($micropostId);
+            return true;
+        } else {
+            // 無い場合は何もしない
+            return false;
+        }
+    }
+    
+    public function is_favoriting($micropostId)
+    {
+        return $this->favorites()->where('favorites.user_id', $micropostId)->exists();
+    }
     /**
      * The attributes that should be hidden for arrays.
      *
