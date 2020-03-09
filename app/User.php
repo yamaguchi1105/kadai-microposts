@@ -116,7 +116,7 @@ class User extends Authenticatable
     
     public function is_favoriting($micropostId)
     {
-        return $this->favorites()->where('favorites.user_id', $micropostId)->exists();
+        return $this->favorites()->where('micropost_id', $micropostId)->exists();
     }
     /**
      * The attributes that should be hidden for arrays.
