@@ -11,7 +11,7 @@
                 </div>
                 <div class="form-group row">
                     <div class="col-1.5">
-                    @include('user_favorit.favorit_button', ['user' => $user])
+                    @include('user_favorite.favorite_button', ['user' => $user])
                     </div>
                     <div class="col-1.5">
                     @if (Auth::id() == $micropost->user_id)

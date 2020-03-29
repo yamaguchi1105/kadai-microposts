@@ -71,7 +71,7 @@ class UsersController extends Controller
 
         $data = [
             'user' => $user,
-            'users' => $favorites,
+            'favorites' => $favorites,
             'microposts' => $microposts,
         ];
 
